@@ -8,6 +8,8 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { SafeAreaView } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Mapbox from '@rnmapbox/maps';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -19,6 +21,8 @@ export default function RootLayout() {
     MontserratRegular: require('../assets/fonts/Montserrat-Regular.ttf'),
     MontserratItalic: require('../assets/fonts/Montserrat-Italic.ttf')
   });
+
+  Mapbox.setAccessToken(`${process.env.EXPO_PUBLIC_MAPBOX_TOKEN}`)
 
   useEffect(() => {
     if (loaded) {
@@ -32,13 +36,13 @@ export default function RootLayout() {
 
   return (
       <SafeAreaView style={{ flex: 1, paddingTop: 40 }}>
-    {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
-        <StatusBar style="auto" />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-    {/* </ThemeProvider> */}
+        <GestureHandlerRootView style={{ flex: 1, backgroundColor: 'grey' }}>
+          <StatusBar style="auto" />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </GestureHandlerRootView>
       </SafeAreaView>
   );
 }

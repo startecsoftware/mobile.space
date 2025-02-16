@@ -24,6 +24,7 @@
     },
     "plugins": [
       "expo-router",
+      
       [
         "expo-splash-screen",
         {
@@ -31,6 +32,13 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsImpl": "mapbox",
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiY2xvdmVzamRzIiwiYSI6ImNtNzd1cmdodDFmcXkya29obWpmbW93b3MifQ.O9Wbkj76x_pjMhkWR5crRg"
         }
       ]
     ],

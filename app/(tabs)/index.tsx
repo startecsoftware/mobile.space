@@ -4,6 +4,7 @@ import Icons from "../../constants/Icons";
 import { useState } from "react";
 import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import Houses from "../houses/houses";
+import styles from "./indexStyle";
 
 
 const { width, height } = useDimension()
@@ -12,27 +13,44 @@ export default function HomeScreen() {
 
   const [index, setIndex] = useState(0);
 
-  const HousesRoute = () => (
-    <Houses/>
-  )
+  const HousesRoute = ({ route }: { route: any }) => {
+    const routeIndex = routes.findIndex(r => r.key === route.key)
+    if (Math.abs(index - routeIndex) > 1) {
+      return <View/>
+    }
 
-  const ApartmentRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
-      <Text>Apartamentos</Text>
-    </View>
-  )
+    return <Houses/>
+  }
 
-  const LandsRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
-      <Text>Terrenos</Text>
-    </View>
-  )
+  const ApartmentRoute = ({ route }: { route: any }) => {
+    const routeIndex = routes.findIndex(r => r.key === route.key)
+    if (Math.abs(index - routeIndex) > 2) {
+      return <View/>
+    }
+    return  <View  style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
+              <Text>Apartamentos</Text>
+            </View>
+  }
 
-  const FarmsRoute = () => (
-    <View style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
-      <Text>Fazendas</Text>
-    </View>
-  )
+  const LandsRoute = ({ route }: { route: any }) => {
+    const routeIndex = routes.findIndex(r => r.key === route.key)
+    if (Math.abs(index - routeIndex) > 3) {
+      return <View/>
+    }
+    return <View style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
+            <Text>Terrenos</Text>
+          </View>
+  }
+
+  const FarmsRoute = ({ route }: { route: any }) => {
+    const routeIndex = routes.findIndex(r => r.key === route.key)
+    if (Math.abs(index - routeIndex) > 4) {
+      return <View/>
+    }
+    return <View style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
+              <Text>Fazendas</Text>
+            </View>
+  }
 
   const renderScene = SceneMap({
     houses: HousesRoute,
@@ -75,44 +93,36 @@ export default function HomeScreen() {
         <TabView
           options={{
             houses: {
-              label: ({focused}) => (
-                <View style={styles.container_navigation}>
-                  <View style={styles.container_icon}>
-                    {focused ? Icons.Houses(30, 30, '#fff', 2) : Icons.Houses(30, 30, '#fff', 1)}
-                  </View>
-                  {/* <Text style={focused ? styles.container_text_navigation : styles.container_text_navigation_inactive}>Casas</Text> */}
+              icon: ({color}) => (
+                <View style={styles.container_icon}>
+                  {Icons.Houses(25, 25, color, 2)}
                 </View>
-              )
+              ),
+              label: () => <Text style={styles.container_text_navigation}>Casas</Text>
             },
             apartments: {
-              label: ({focused}) => (
-                <View style={styles.container_navigation}>
-                  <View style={styles.container_icon}>
-                    { focused ? Icons.Apartments(30, 30, '#fff', 2) : Icons.Apartments(30, 30, '#fff', 1)}
-                  </View>
-                  {/* <Text style={focused ? styles.container_text_navigation : styles.container_text_navigation_inactive}>Apartamentos</Text> */}
+              icon: ({route, focused, color}) => (
+                <View style={styles.container_icon}>
+                  {Icons.Apartments(25, 25, color, 2)}
                 </View>
-              )
+              ),
+              label: () => <Text style={styles.container_text_navigation}>Apartamentos</Text>
             },
             lands: {
-              label: ({focused}) => (
-                <View style={styles.container_navigation}>
-                  <View style={styles.container_icon}>
-                    { focused ? Icons.Land(30, 30, '#fff', 2) : Icons.Land(30, 30, '#fff', 1)}
-                  </View>
-                  {/* <Text style={focused ? styles.container_text_navigation : styles.container_text_navigation_inactive}>Terrenos</Text> */}
+              icon: ({route, focused, color}) => (
+                <View style={styles.container_icon}>
+                   {Icons.Land(25, 25, color, 2)}
                 </View>
-              )
+              ),
+              label: () => <Text style={styles.container_text_navigation}>Terrenos</Text>
             },
             farms: {
-              label: ({focused}) => (
-                <View style={styles.container_navigation}>
-                  <View style={styles.container_icon}>
-                    {focused ? Icons.Farm(30, 30, '#fff', 2) : Icons.Farm(30, 30, '#fff', 1)}
-                  </View>
-                  {/* <Text style={focused ? styles.container_text_navigation : styles.container_text_navigation_inactive}>Fazendas</Text> */}
+              icon: ({route, focused, color}) => (
+                <View style={styles.container_icon}>
+                   {Icons.Farm(25, 25, color, 2)}
                 </View>
-              )
+              ),
+              label: () => <Text style={styles.container_text_navigation}>Fazendas</Text>
             }
           }}
           swipeEnabled={false}
@@ -126,56 +136,3 @@ export default function HomeScreen() {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  container_header: {
-    backgroundColor: '#7d02fd',
-    width: width,
-    height: height * 0.15,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  container_search_button: {
-    backgroundColor: '#fff',
-    width: 280,
-    height: 50,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 10,
-    flexDirection: 'row',
-  },
-  container_input_text: {
-    fontFamily: "MontserratBold"
-  },
-  container_icon: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%'
-  },
-  container_navigation: {
-    // backgroundColor: 'red',
-    width: 50,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'flex-end'
-  },
-  container_navigation_inactive: {
-
-  },
-  container_text_navigation: {
-    fontSize: 10,
-    fontFamily: 'MontserratBold',
-    color: '#fff'
-  },
-  container_text_navigation_inactive: {
-    fontSize: 10,
-    fontFamily: 'Montserrat',
-    color: '#fff'
-  }
-})

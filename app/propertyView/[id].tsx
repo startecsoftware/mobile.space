@@ -1,8 +1,9 @@
-import { BottomSheet } from "@rneui/themed";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
-import { StyleSheet, Text, View, Dimensions, Pressable, ScrollView } from "react-native";
+import { useCallback, useMemo, useRef } from "react";
+import { Text, View, Dimensions, Pressable, Image, TouchableOpacity, Platform } from "react-native";
 import Icons from "../../constants/Icons";
+import styles from './propertyStyles'
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
 const { width } = Dimensions.get('screen')
 
@@ -10,43 +11,34 @@ const { width } = Dimensions.get('screen')
 export default function PropertyView() {
 
     const { id } = useLocalSearchParams();
+    const bottomSheetRef = useRef<BottomSheet>(null);
 
-    const [isVisible, setIsVisible] = useState(false);
+    const snapPoints = useMemo(() => ['80%', '50%', '15%'], [])
 
     const navigateToHome = () => {
-        setIsVisible(false)
         router.push({ pathname: '/(tabs)' })
     }
 
-    return (
-        <View style={styles.container}>
-            <View style={{ width: '100%', paddingTop: 10, alignItems: 'flex-end', paddingRight: 8, backgroundColor: '#f2ecf9' }}>
-                <Pressable style={styles.container_buttons} onPress={() => setIsVisible(true)}>
-                    {Icons.PropertyData(25, 25, '#7d02fd', 2)}
-                </Pressable>
-            </View>
-            <View style={{ backgroundColor: '#f2ecf9', width: width, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>MAPA</Text>
-            </View>
-            <BottomSheet modalProps={{
-                animationType: 'slide'
+    const handleSheetChanges = useCallback((index: number) => {
+        // console.log('handleSheedChanges', index)
+    }, [])
 
-            }} containerStyle={styles.container_modal} isVisible={isVisible}>
-                <ScrollView>
-                    <View style={{ justifyContent: 'center' }}>
-                        <View style={styles.container_header}>
-                            <View>
-                                <Pressable onPress={() => navigateToHome()} style={styles.container_buttons}>
-                                    {Icons.ArrowGoBack(25, 25, '#7d02fd', 2)}
-                                </Pressable>
-                            </View>
-                            <View>
-                                <Pressable onPress={() => setIsVisible(false)} style={styles.container_buttons}>
-                                    {Icons.Localization(25, 25, '#7d02fd', 2)}
-                                </Pressable>
-                            </View>
-                        </View>
-                    </View>
+    return (
+        <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
+                <View style={styles.container_return}>
+                    <Pressable onPress={() => navigateToHome()} style={styles.container_buttons}>
+                        {Icons.ArrowGoBack(25, 25, '#7d02fd', 2)}
+                    </Pressable>
+                </View>
+            </View>
+            <BottomSheet
+                snapPoints={snapPoints}
+                ref={bottomSheetRef}
+                onChange={handleSheetChanges}
+                enableContentPanningGesture={true}
+            >
+                <BottomSheetScrollView style={{ flex: 1 }}>
                     <View style={styles.container_data}>
                         <View style={styles.container_image}>
                             <Text>IMAGEM</Text>
@@ -94,102 +86,109 @@ export default function PropertyView() {
                         <View>
                             <Text style={{ fontFamily: "MontserratBold", fontSize: 20, paddingLeft: 5 }}>Características</Text>
                         </View>
-                        <View>
-                            <View>
-                                <Text>300 m²</Text>
-                                <Text>2 quartos</Text>
+                        <View style={styles.container_characteristics}>
+                            <View style={styles.container_information}>
+                                <View style={styles.container_information_data}>
+                                    <Text style={styles.container_information_title}>Imóvel</Text>
+                                </View>
+                                <View style={styles.container_information_data}>
+                                    <View style={styles.container_icon}>
+                                        {Icons.Bed(25, 25, '#7d02fd', 2)}
+                                    </View>
+                                    <Text style={styles.container_information_data_text}>2 quartos</Text>
+                                </View>
+                                <View style={styles.container_information_data}>
+                                    <View style={styles.container_icon}>
+                                        {Icons.Bath(25, 25, '#7d02fd', 2)}
+                                    </View>
+                                    <Text style={styles.container_information_data_text}>3 banheiros</Text>
+                                </View>
+                                <View style={styles.container_information_data}>
+                                    <View style={styles.container_icon}>
+                                        {Icons.Car(25, 25, '#7d02fd', 2)} 
+                                    </View>
+                                    <Text style={styles.container_information_data_text}>2 vagas</Text>
+                                </View>
+                                <View style={styles.container_information_data}>
+                                    <View style={styles.container_icon}>
+                                        {Icons.Check(25, 25, '#7d02fd', 2)}
+                                    </View>
+                                    <Text style={styles.container_information_data_text}>Aceita animais</Text>
+                                </View>
                             </View>
-                            <View></View>
+                            <View style={styles.container_information}>
+                                <View style={styles.container_information_data}>
+                                    <Text style={styles.container_information_title}>Condomínio</Text>
+                                </View>
+                                <View style={styles.container_information_data}>
+                                    <View style={styles.container_icon}>
+                                        {Icons.Check(25, 25, '#7d02fd', 2)}
+                                    </View>
+                                    <Text style={styles.container_information_data_text}>Sauna</Text>
+                                </View>
+                                <View style={styles.container_information_data}>
+                                    <View style={styles.container_icon}>
+                                        {Icons.Check(25, 25, '#7d02fd', 2)}
+                                    </View>
+                                    <Text style={styles.container_information_data_text}>Área de lazer</Text>
+                                </View>
+                                <View style={styles.container_information_data}>
+                                    <View style={styles.container_icon}>
+                                        {Icons.Check(25, 25, '#7d02fd', 2)}
+                                    </View>
+                                    <Text style={styles.container_information_data_text}>Salão de festar</Text>
+                                </View>
+                            </View>
                         </View>
                     </View>
-                </ScrollView>
+                    <View style={{ backgroundColor: '#fff', marginTop: 10, paddingBottom: 10 }}>
+                        <View style={{ paddingTop: 10, paddingBottom: 10 }}>
+                            <Text style={{ fontFamily: "MontserratBold", fontSize: 20, paddingLeft: 5 }}>Descrição do anúncio</Text>
+                            <View style={styles.container_update_description}>
+                                <View style={styles.container_update_icon}>
+                                    {Icons.Clock(20, 20, '#7d02fd', 1)}
+                                </View>
+                                <Text>Criado em 22/01/25</Text>
+                            </View>
+                        </View>
+                        <View style={styles.container_description}>
+                            <Text style={styles.container_description_text}>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={{ backgroundColor: '#fff', marginTop: 10, paddingBottom: 10, }}>
+                        <View style={{ paddingTop: 10, paddingBottom: 10 }}>
+                            <Text style={{ fontFamily: "MontserratBold", fontSize: 20, paddingLeft: 5 }}>Com quem falar?</Text>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                            <View style={styles.container_broker}>
+                                <View>
+                                    <Image 
+                                        style={styles.image_broker}
+                                        source={{
+                                            uri: 'https://costaetavaresadv.com.br/wp-content/uploads/2024/03/xx.xx_.2024-Comissao-de-corretor-de-imoveis.jpg'
+                                        }}
+                                    />
+                                </View>
+                                <View style={styles.container_name_broker}>
+                                    <Text style={styles.container_name_broker_text}>
+                                        Pablo Santos Imóveis
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </BottomSheetScrollView>
+                <View style={styles.container_contact}>
+                    <TouchableOpacity style={styles.container_contact_pressable}>
+                        <Text style={styles.container_contact_text}>
+                            Contatar
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </BottomSheet>
         </View>
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: 'red'
-    },
-    container_modal: {
-        backgroundColor: '#f2ecf9',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    container_header: {
-        flexDirection: 'row',
-        width: width * 0.95,
-        paddingTop: 15,
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    container_buttons: {
-        backgroundColor: '#fff',
-        width: 40,
-        height: 40,
-        borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    container_data: {
-        flex: 1,
-        backgroundColor: 'red',
-        marginTop: 10,
-        marginBottom: 10
-    },
-    container_image: {
-        backgroundColor: '#E5E4E2',
-        height: 230,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    container_header_data: {
-        backgroundColor: '#000',
-        alignSelf: 'flex-start',
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
-        borderRadius: 5
-    },
-    container_header_text: {
-        fontFamily: 'MontserratBold',
-        color: '#fff'
-    },
-    container_header_title: {
-        marginTop: 10,
-    },
-    container_header_title_text: {
-        fontFamily: 'MontserratBold',
-        fontSize: 20
-    },
-    container_data_information: {
-        flexDirection: 'row'
-    },
-    container_data_information_text: {
-        marginRight: 5,
-        marginLeft: 5,
-        fontFamily: 'MontserratBold'
-    },
-    line_separation: {
-        width: width * 0.95,
-        height: 1,
-        backgroundColor: '#000'
-    },
-    container_value: {
-        flexDirection: 'row'
-    },
-    container_value_data: {
-        // marginLeft: 10,
-        marginRight: 5
-    },
-    container_value_text: {
-        fontFamily: 'MontserratRegular'
-    }
-})
