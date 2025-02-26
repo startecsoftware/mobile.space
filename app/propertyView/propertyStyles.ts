@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E5E4E2',
         height: 230,
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         width: width * 0.95
     },
     container_header_data: {
@@ -160,11 +160,26 @@ const styles = StyleSheet.create({
         height: 65,
         width: width,
         alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
+    },
+    container_contact_whatsapp_pressable: {
+        backgroundColor: '#25d366',
+        width: width * 0.15,
+        height: 50,
+        marginRight: 10,
+        borderRadius: 5,
+    },
+    container_icon_whatsapp: {
+        width: width * 0.15,
+        height: 50,
+        borderRadius: 5,
+        alignItems: 'center',
         justifyContent: 'center'
     },
     container_contact_pressable: {
         backgroundColor: "#7d02fd",
-        width: width * 0.95,
+        width: width * 0.80,
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',

@@ -4,41 +4,38 @@
     "slug": "space-imoveis",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/space-logo-app.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "splash": {
+      "image":"./assets/images/space-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#7d02fd"
+    },
     "ios": {
+      "newArchEnabled": true,
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/space-logo.png",
+        "backgroundColor": "#7d02fd"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/space-logo.png"
     },
     "plugins": [
       "expo-router",
-      
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/space-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ],
-      [
-        "@rnmapbox/maps",
-        {
-          "RNMapboxMapsImpl": "mapbox",
-          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiY2xvdmVzamRzIiwiYSI6ImNtNzd1cmdodDFmcXkya29obWpmbW93b3MifQ.O9Wbkj76x_pjMhkWR5crRg"
+          "backgroundColor": "#7d02fd"
         }
       ]
     ],

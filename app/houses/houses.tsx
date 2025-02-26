@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, FlatList, SectionList } from "react-native";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
+// import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import { useDimension } from "../../hooks/useDimension";
 import { CardComponent } from "../../components/CardComponent/CardComponent";
 import { CardAdvertising } from "../../components/CardAdvertising/CardAdvertising";
 import { router } from "expo-router";
-
+import { Tab, TabView } from "@rneui/themed"
 const DATA = [
     {
         advertising: 'PROPAGANDA',
@@ -130,36 +130,78 @@ export default function Houses() {
         </View>
     )
 
-    const renderTabBar = (props: any) => (
-        <TabBar
-            {...props}
-            indicatorStyle={{ backgroundColor: '#f2ecf9' }}
-            tabStyle={{ backgroundColor: '#f2ecf9' }}
-            contentContainerStyle={{
-                shadowColor: 'transparent'
-            }}
-            style={{
-                elevation: 0,
-                backgroundColor: '#f2ecf9'
-            }}
-        />
-    )
+    // const renderTabBar = (props: any) => (
+    //     <TabBar
+    //         {...props}
+    //         indicatorStyle={{ backgroundColor: '#f2ecf9' }}
+    //         tabStyle={{ backgroundColor: '#f2ecf9' }}
+    //         contentContainerStyle={{
+    //             shadowColor: 'transparent'
+    //         }}
+    //         style={{
+    //             elevation: 0,
+    //             backgroundColor: '#f2ecf9'
+    //         }}
+    //     />
+    // )
 
-    const renderScene = SceneMap({
-        highlights: HighlightsRoute,
-        allhouse: AllhouseRoute
-    })
+    // const renderScene = SceneMap({
+    //     highlights: HighlightsRoute,
+    //     allhouse: AllhouseRoute
+    // })
 
 
-    const routes = [
-        { key: 'highlights', title: 'Destaques' },
-        { key: 'allhouse', title: 'Todos' }
-    ]
+    // const routes = [
+    //     { key: 'highlights', title: 'Destaques' },
+    //     { key: 'allhouse', title: 'Todos' }
+    // ]
 
     return (
         <View style={styles.container}>
             <View style={styles.container_navigation}>
-                <TabView
+                <Tab
+                    value={index}
+                    onChange={(e) => setIndex(e)}
+                    disableIndicator={true}
+                    variant="primary"
+                    style={{
+                        backgroundColor: "transparent"
+                    }}
+                >
+                    <Tab.Item
+                        title="Destaques"
+                        titleStyle={{ fontFamily: "MontserratBold", fontSize: 15 }}
+                        dense={true}
+                        containerStyle={{
+                            backgroundColor: "#7d02fd",
+                            borderRadius: 10,
+                            margin: 5,
+                            height: 45,
+                            padding: 0
+                        }}
+                        variant="default"
+                    />
+                    <Tab.Item
+                        title="Todos"
+                        titleStyle={{ fontFamily: "MontserratBold", fontSize: 15 }}
+                        dense={true}
+                        containerStyle={{
+                            backgroundColor: "#7d02fd",
+                            borderRadius: 10,
+                            margin: 5,
+                            height: 45
+                        }}
+                    />
+                </Tab>
+                <TabView value={index} onChange={setIndex} animationType="spring">
+                    <TabView.Item style={{ width: width }}>
+                        {HighlightsRoute()}
+                    </TabView.Item>
+                    <TabView.Item style={{ width: width }}>
+                        {AllhouseRoute()}
+                    </TabView.Item>
+                </TabView>
+                {/* <TabView
                     options={{
                         highlights: {
                             label: ({focused}) => (
@@ -182,7 +224,7 @@ export default function Houses() {
                     onIndexChange={setIndex}
                     initialLayout={{ width: width }}
                     renderTabBar={renderTabBar}
-                />
+                /> */}
             </View>
         </View>
     )
@@ -195,7 +237,7 @@ const styles = StyleSheet.create({
     },
     container_navigation: {
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
     },
     container_button: {
         width: 180,

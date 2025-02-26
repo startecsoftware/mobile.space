@@ -1,138 +1,92 @@
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { Text, View } from "react-native";
 import { useDimension } from "../../hooks/useDimension";
 import Icons from "../../constants/Icons";
 import { useState } from "react";
-import { SceneMap, TabBar, TabView } from "react-native-tab-view";
+// import { SceneMap, TabBar, TabView } from "react-native-tab-view";
 import Houses from "../houses/houses";
-import styles from "./indexStyle";
-
-
-const { width, height } = useDimension()
+import styles from "../../styles/indexStyles";
+import { Header } from "../../components/Header/Header";
+import { Tab, TabView } from '@rneui/themed'
+const { width } = useDimension()
 
 export default function HomeScreen() {
 
   const [index, setIndex] = useState(0);
 
-  const HousesRoute = ({ route }: { route: any }) => {
-    const routeIndex = routes.findIndex(r => r.key === route.key)
-    if (Math.abs(index - routeIndex) > 1) {
-      return <View/>
-    }
-
-    return <Houses/>
-  }
-
-  const ApartmentRoute = ({ route }: { route: any }) => {
-    const routeIndex = routes.findIndex(r => r.key === route.key)
-    if (Math.abs(index - routeIndex) > 2) {
-      return <View/>
-    }
-    return  <View  style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
-              <Text>Apartamentos</Text>
-            </View>
-  }
-
-  const LandsRoute = ({ route }: { route: any }) => {
-    const routeIndex = routes.findIndex(r => r.key === route.key)
-    if (Math.abs(index - routeIndex) > 3) {
-      return <View/>
-    }
-    return <View style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
-            <Text>Terrenos</Text>
-          </View>
-  }
-
-  const FarmsRoute = ({ route }: { route: any }) => {
-    const routeIndex = routes.findIndex(r => r.key === route.key)
-    if (Math.abs(index - routeIndex) > 4) {
-      return <View/>
-    }
-    return <View style={{ flex: 1, backgroundColor: '#f2ecf9' }}>
-              <Text>Fazendas</Text>
-            </View>
-  }
-
-  const renderScene = SceneMap({
-    houses: HousesRoute,
-    apartments: ApartmentRoute,
-    lands: LandsRoute,
-    farms: FarmsRoute
-  })
-
-  const renderTabBar = (props: any) => (
-    <TabBar
-      {...props}
-      indicatorStyle={{ backgroundColor: '#7d02fd' }}
-      tabStyle={{ backgroundColor: '#7d02fd' }}
-    />
-  )
-
-  const routes = [
-    { key: 'houses', title: 'Casas' },
-    { key: 'apartments', title: 'Apartamentos'},
-    { key: 'lands', title: 'Terrenos' },
-    { key: 'farms', title: 'Fazendas' }
-  ]
-
-
   return (
     <View style={styles.container}>
-      <View style={styles.container_header}>
-        <View style={{ paddingTop: 40 }}>
-          <TouchableOpacity style={styles.container_search_button}>
-            <View>
-              {Icons.Search(15, 15, 'black', 2)}
-            </View>
-            <View>
-              <Text style={styles.container_input_text}>Inicie sua busca</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Header pageType="home-screen"/>
       <View style={{ flex: 1, width: width }}>
-        <TabView
-          options={{
-            houses: {
-              icon: ({color}) => (
-                <View style={styles.container_icon}>
-                  {Icons.Houses(25, 25, color, 2)}
-                </View>
-              ),
-              label: () => <Text style={styles.container_text_navigation}>Casas</Text>
-            },
-            apartments: {
-              icon: ({route, focused, color}) => (
-                <View style={styles.container_icon}>
-                  {Icons.Apartments(25, 25, color, 2)}
-                </View>
-              ),
-              label: () => <Text style={styles.container_text_navigation}>Apartamentos</Text>
-            },
-            lands: {
-              icon: ({route, focused, color}) => (
-                <View style={styles.container_icon}>
-                   {Icons.Land(25, 25, color, 2)}
-                </View>
-              ),
-              label: () => <Text style={styles.container_text_navigation}>Terrenos</Text>
-            },
-            farms: {
-              icon: ({route, focused, color}) => (
-                <View style={styles.container_icon}>
-                   {Icons.Farm(25, 25, color, 2)}
-                </View>
-              ),
-              label: () => <Text style={styles.container_text_navigation}>Fazendas</Text>
-            }
+        <Tab
+          value={index}
+          onChange={(e) => setIndex(e)}
+          indicatorStyle={{
+            backgroundColor: '#fff',
+            height: 3
           }}
-          swipeEnabled={false}
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          renderTabBar={renderTabBar}
-          initialLayout={{ width: width }}
-        />
+          style={{
+            backgroundColor: "#7d02fd"
+          }}
+          variant="primary"
+        >
+          <Tab.Item
+            title="Casas"
+            titleStyle={{ fontFamily: "MontserratBold", fontSize: 10 }}
+            icon={<View>{Icons.Houses(25, 25, "#fff", 2)}</View>}
+            containerStyle={{
+              backgroundColor: "#7d02fd",
+              // alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          />
+          <Tab.Item
+            title="Apartamento"
+            titleStyle={{ fontFamily: "MontserratBold", fontSize: 10 }}
+            icon={<View>{Icons.Apartments(25, 25, "#fff", 2)}</View>}
+            containerStyle={{
+              backgroundColor: "#7d02fd",
+              // alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          />
+          <Tab.Item
+            title="Terrenos"
+            titleStyle={{ fontFamily: "MontserratBold", fontSize: 10 }}
+            icon={<View>{Icons.Land(25, 25, "#fff", 2)}</View>}
+            containerStyle={{
+              backgroundColor: "#7d02fd",
+              // alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          />
+          <Tab.Item
+            title="Fazendas"
+            titleStyle={{ fontFamily: "MontserratBold", fontSize: 10 }}
+            icon={<View>{Icons.Farm(25, 25, "#fff", 2)}</View>}
+            containerStyle={{
+              backgroundColor: "#7d02fd",
+              // alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          />
+        </Tab>
+
+        <TabView value={index} onChange={setIndex} animationType="spring">
+            <TabView.Item style={{ width: width }}>
+              <Houses/>
+            </TabView.Item>
+            <TabView.Item style={{ width: width }}>
+              <Text>Apartamentos</Text>
+            </TabView.Item>
+            <TabView.Item style={{ width: width }}>
+              <Text>Terrenos</Text>
+            </TabView.Item>
+            <TabView.Item style={{ width: width }}>
+              <Text>Fazendas</Text>
+            </TabView.Item>
+        </TabView>
       </View>
     </View>
   )
 }
+

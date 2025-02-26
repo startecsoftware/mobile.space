@@ -5,8 +5,6 @@ import Icons from "../../constants/Icons";
 import styles from './propertyStyles'
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
-const { width } = Dimensions.get('screen')
-
 
 export default function PropertyView() {
 
@@ -18,6 +16,10 @@ export default function PropertyView() {
     const navigateToHome = () => {
         router.push({ pathname: '/(tabs)' })
     }
+
+    const navigateToChat = (id: string) => (
+        router.push({ pathname: '/chats/[id]', params: {id: id} })
+    )
 
     const handleSheetChanges = useCallback((index: number) => {
         // console.log('handleSheedChanges', index)
@@ -31,6 +33,7 @@ export default function PropertyView() {
                         {Icons.ArrowGoBack(25, 25, '#7d02fd', 2)}
                     </Pressable>
                 </View>
+                
             </View>
             <BottomSheet
                 snapPoints={snapPoints}
@@ -41,7 +44,19 @@ export default function PropertyView() {
                 <BottomSheetScrollView style={{ flex: 1 }}>
                     <View style={styles.container_data}>
                         <View style={styles.container_image}>
-                            <Text>IMAGEM</Text>
+                            <View style={{ height: 40, width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5, paddingTop: 5, paddingBottom: 10 }}>
+                                <TouchableOpacity style={{ backgroundColor: "#fff", borderRadius: 25, width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+                                    {Icons.Favorite(25, 25, '#7d02fd', 2)}
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ height: 40, width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5, paddingTop: 5, marginTop: 5 }}>
+                                <TouchableOpacity style={{ backgroundColor: "#fff", borderRadius: 25, width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+                                    {Icons.Share(25, 25, '#7d02fd', 2)}
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <Text>IMAGEM</Text>
+                            </View>
                         </View>
                     </View>
                     <View style={{ marginTop: 20, backgroundColor: '#fff', paddingTop: 10, paddingBottom: 10, paddingLeft: 5, paddingRight: 5 }}>
@@ -181,7 +196,12 @@ export default function PropertyView() {
                     </View>
                 </BottomSheetScrollView>
                 <View style={styles.container_contact}>
-                    <TouchableOpacity style={styles.container_contact_pressable}>
+                    <TouchableOpacity style={styles.container_contact_whatsapp_pressable}>
+                        <View style={styles.container_icon_whatsapp}>
+                            {Icons.Whatsapp(25, 25, '#fff', 2)}
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigateToChat(id.toString())} style={styles.container_contact_pressable}>
                         <Text style={styles.container_contact_text}>
                             Contatar
                         </Text>
