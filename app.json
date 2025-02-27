@@ -37,6 +37,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#7d02fd"
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Space iMóveis to use your location."
+        }
       ]
     ],
     "experiments": {

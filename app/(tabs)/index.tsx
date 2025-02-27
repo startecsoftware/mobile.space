@@ -40,13 +40,13 @@ export default function HomeScreen() {
             }}
           />
           <Tab.Item
-            title="Apartamento"
-            titleStyle={{ fontFamily: "MontserratBold", fontSize: 10 }}
+            title="Apartamentos"
+            titleStyle={{ fontFamily: "MontserratBold", fontSize: 10, width: 108  }}
             icon={<View>{Icons.Apartments(25, 25, "#fff", 2)}</View>}
             containerStyle={{
               backgroundColor: "#7d02fd",
               // alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           />
           <Tab.Item

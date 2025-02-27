@@ -1,10 +1,13 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useMemo, useRef } from "react";
-import { Text, View, Dimensions, Pressable, Image, TouchableOpacity, Platform } from "react-native";
+import { Text, View, Dimensions, Pressable, Image, TouchableOpacity, Platform, StyleSheet } from "react-native";
 import Icons from "../../constants/Icons";
 import styles from './propertyStyles'
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import Map from 'react-native-maps';
+import MapView from "react-native-maps";
 
+const { width, height } = Dimensions.get('screen')
 
 export default function PropertyView() {
 
@@ -25,15 +28,26 @@ export default function PropertyView() {
         // console.log('handleSheedChanges', index)
     }, [])
 
+    const initialRegion = {
+        latitude: 49.2576508,
+        longitude: -123.2639868,
+        latitudeDelta: 100,
+        longitudeDelta: 100,
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                <View style={styles.container_return}>
-                    <Pressable onPress={() => navigateToHome()} style={styles.container_buttons}>
-                        {Icons.ArrowGoBack(25, 25, '#7d02fd', 2)}
-                    </Pressable>
-                </View>
-                
+                <Map
+                    style={{ width: width, height: height }}
+                    initialRegion={{
+                        latitude: -9.5416924,
+                        longitude: -35.8512363,
+                        latitudeDelta: 0.005,
+                        longitudeDelta: 0.005
+                    }}    
+                />
+                    
             </View>
             <BottomSheet
                 snapPoints={snapPoints}
@@ -42,6 +56,11 @@ export default function PropertyView() {
                 enableContentPanningGesture={true}
             >
                 <BottomSheetScrollView style={{ flex: 1 }}>
+                    <View style={styles.container_return}>
+                        <Pressable onPress={() => navigateToHome()} style={styles.container_buttons}>
+                            {Icons.ArrowGoBack(25, 25, '#7d02fd', 2)}
+                        </Pressable>
+                    </View>
                     <View style={styles.container_data}>
                         <View style={styles.container_image}>
                             <View style={{ height: 40, width: '100%', flexDirection: 'row', justifyContent: 'flex-end', paddingRight: 5, paddingTop: 5, paddingBottom: 10 }}>
