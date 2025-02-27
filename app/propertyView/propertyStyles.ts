@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     container_buttons: {
-        backgroundColor: '#fff',
+        backgroundColor: '#E5E4E2',
         width: 40,
         height: 40,
         borderRadius: 25,
